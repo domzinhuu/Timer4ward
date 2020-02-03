@@ -1,0 +1,60 @@
+<div class="container d-flex justify-content-center align-items-center" style="height: 100vh;">
+  <div class="login-box bg-light p-4 w-50">
+    <form #loginForm="ngForm">
+      <div class="row">
+        <div class="col-sm-12 login-title text-center">
+          <img src="assets/img/clock.png" alt="logo" width="120" />
+          <p class="text-dark">Timer 4ward</p>
+        </div>
+        <div class="col-sm-12 form-group">
+          <label for="email">Email</label>
+          <input type="text" required ngModel name="email" id="email" class="form-control" placeholder="Email" />
+        </div>
+
+        <div class="col-sm-12 form-group" *ngIf="!isForgetPassword">
+          <label for="password">Password</label>
+          <input
+            type="password"
+            required
+            name="password"
+            ngModel
+            id="password"
+            class="form-control"
+            placeholder="***********"
+          />
+        </div>
+
+        <div class="col-sm-12 text-center" *ngIf="!isForgetPassword">
+          <button *ngIf="!isLoading" class="btn btn-dark" (click)="login(loginForm)">
+            <i class="fa fa-sign-in"></i> Login
+          </button>
+          <button *ngIf="isLoading" class="btn btn-dark" disabled>
+            <i class="fa fa-spin fa-spinner"></i> Processando...
+          </button>
+        </div>
+
+        <div class="col-sm-12 text-center" *ngIf="isForgetPassword">
+          <button *ngIf="!isLoading" class="btn btn-dark" (click)="recoveryPassword(loginForm)">
+            <i class="fa fa-send"></i> Enviar
+          </button>
+          <button *ngIf="isLoading" class="btn btn-dark" disabled>
+            <i class="fa fa-spin fa-spinner"></i> Processando...
+          </button>
+        </div>
+
+        <div class="col-sm-12 text-center" *ngIf="!isForgetPassword">
+          <button class="btn btn-link" (click)="isForgetPassword = true">
+            <i class="fa fa-unlock-alt"></i> Esqueci minha senha
+          </button>
+        </div>
+
+        <div class="col-sm-12 text-center" *ngIf="isForgetPassword">
+          <button class="btn btn-link" (click)="isForgetPassword = false">
+            Cancelar
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+  <small style="position: absolute; bottom: 0; padding: 20px;">&copy; DomjSoftware 2020</small>
+</div>

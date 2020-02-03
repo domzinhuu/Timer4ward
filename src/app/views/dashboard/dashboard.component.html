@@ -1,0 +1,23 @@
+<div class="body">
+  <tf-header [username]="(loggedUser$ | async).name" (logout)="logout()"></tf-header>
+
+  <div class="container-fluid dashboard-module">
+    <div class="row">
+      <!-- SIDEBAR -->
+      <div class="col-sm-12 col-md-3 sidebar">
+        <tf-per-cost-center-chart></tf-per-cost-center-chart>
+      </div>
+
+      <!-- PAGE CONTENT -->
+      <div class="col-sm-12 col-md-6 page-content">
+        <router-outlet></router-outlet>
+      </div>
+
+      <!-- ASIDEBAR -->
+      <div class="col-sm-12 col-md-3 asidebar">
+        <tf-launch-form [costCenterList]="costCenterList$ | async"></tf-launch-form>
+        <tf-cost-center></tf-cost-center>
+      </div>
+    </div>
+  </div>
+</div>

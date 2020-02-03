@@ -1,0 +1,14 @@
+<div class="card m-1">
+  <div class="card-header d-flex justify-content-between">
+    <span><i class="fa fa-pie-chart"></i> Centro de custo</span>
+    <div>
+      <span>01/02/2020 até 05/02/2020 <i class="fa fa-caret-down"></i></span>
+    </div>
+  </div>
+  <div class="card-body">
+    <div class="chart-wrapper">
+      <canvas baseChart [data]="doughnutChartData" [labels]="doughnutChartLabels" [chartType]="doughnutChartType">
+      </canvas>
+    </div>
+  </div>
+</div>

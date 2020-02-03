@@ -1,0 +1,51 @@
+<div class="card   m-1">
+  <div class="card-header bg-primary text-white"><i class="fa fa-rocket"></i> Novo Lançamento</div>
+  <div class="card-body">
+    <form [formGroup]="releaseForm">
+      <div class="row">
+        <div class="col-sm-12 form-group">
+          <label for="costCenter">Centro de Custo<span class="font-weight-bold text-danger">*</span></label>
+          <select name="costCenter" id="costCenter" formControlName="costCenter" class="form-control">
+            <option [ngValue]="null">Selecione</option>
+            <option [ngValue]="center._id" *ngFor="let center of costCenterList">{{ center.name }}</option>
+          </select>
+        </div>
+
+        <div class="col-sm-6 form-group ">
+          <label for="time">Tempo Gasto<span class="font-weight-bold text-danger">*</span></label>
+          <input
+            class="form-control"
+            formControlName="hour"
+            min="0"
+            type="number"
+            name="hour"
+            id="time"
+            placeholder="Hora"
+          />
+        </div>
+        <div class="col-sm-6 form-group">
+          <label for="minute">&nbsp;</label>
+          <input
+            class="form-control"
+            min="0"
+            max="59"
+            formControlName="minute"
+            type="number"
+            name="minute"
+            id="minute"
+            placeholder="Min"
+          />
+        </div>
+
+        <div class="col-sm-12 text-right">
+          <button *ngIf="!isLoading" (click)="saveRelease()" class="btn btn-primary">
+            <i class="fa fa-send"></i> Enviar
+          </button>
+          <button *ngIf="isLoading" class="btn btn-primary" disabled>
+            <i class="fa fa-spin fa-spinner"></i> Processando...
+          </button>
+        </div>
+      </div>
+    </form>
+  </div>
+</div>
