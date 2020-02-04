@@ -1,6 +1,8 @@
 import { Component, OnInit } from '@angular/core';
 import { AuthenticationService } from './services/authentication/authentication.service';
 import { Router } from '@angular/router';
+import { Observable } from 'rxjs';
+import { UserModel } from './models/user.model';
 
 @Component({
   selector: 'app-root',
@@ -9,17 +11,20 @@ import { Router } from '@angular/router';
 })
 export class AppComponent implements OnInit {
   title = 'timer4ward';
-  constructor(private loginService: AuthenticationService, private router: Router) {}
+  loggedUser$: Observable<UserModel>;
+
+  constructor(private authService: AuthenticationService, private router: Router) {}
 
   ngOnInit(): void {
     this.checkIfIsLogged();
+    this.loggedUser$ = this.authService.userLogged$;
   }
 
   private checkIfIsLogged(): void {
-    const isLogged: boolean = this.loginService.renewSessionIfTokenIsValid();
+    const isLogged: boolean = this.authService.renewSessionIfTokenIsValid();
 
     if (isLogged) {
-      this.router.navigateByUrl('/dashboard/home/info');
+      this.router.navigateByUrl('/dashboard');
     }
   }
 }

@@ -5,13 +5,7 @@ import { DashboardComponent } from './dashboard.component';
 const routes: Routes = [
   {
     path: '',
-    component: DashboardComponent,
-    children: [
-      {
-        path: 'home',
-        loadChildren: () => import('../home-info/home-info.module').then(m => m.HomeInfoModule)
-      }
-    ]
+    component: DashboardComponent
   }
 ];
 

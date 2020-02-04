@@ -1,5 +1,5 @@
-<nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-  <a class="navbar-brand logo" href="#">
+<nav class="navbar fixed-top navbar-expand-lg navbar-dark bg-dark">
+  <a class="navbar-brand logo" [routerLink]="['/dashboard']">
     <img src="assets/img/clock-white.png" width="30" height="30" class="d-inline-block align-top" alt="" /> Timer
     4ward</a
   >
@@ -17,19 +17,17 @@
   <div class="collapse navbar-collapse" id="navbarText">
     <ul class="navbar-nav mr-auto">
       <li class="nav-item active">
-        <a class="nav-link" [routerLink]="['/dashboard/home/info']" routerLinkActive="router-link-active"
+        <a class="nav-link" [routerLink]="['/dashboard']" routerLinkActive="router-link-active"
           >Home <span class="sr-only">(current)</span></a
         >
       </li>
       <li class="nav-item">
-        <a class="nav-link" [routerLink]="['/dashboard/home/info']" routerLinkActive="router-link-active"
-          >Relatórios
-        </a>
+        <a class="nav-link" [routerLink]="['/reports']" routerLinkActive="router-link-active">Relatórios </a>
       </li>
     </ul>
     <span class="navbar-text">
       Logado como <b>{{ username }}!</b>
     </span>
-    <button (click)="logout.emit()" class="btn btn-link">Sair</button>
+    <button (click)="logout()" class="btn btn-link">Sair</button>
   </div>
 </nav>

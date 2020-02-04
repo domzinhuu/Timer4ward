@@ -10,6 +10,7 @@ import { AppComponent } from './app.component';
 import { AuthenticationComponent } from './views/authentication/authentication.component';
 import { RecoveryPasswordComponent } from './views/authentication/recover-password/recovery-password.component';
 import { HeaderInterceptor } from './security/interceptor/header-interceptor.service';
+import { HeaderModule } from './components/header/header.module';
 
 @NgModule({
   declarations: [AppComponent, AuthenticationComponent, RecoveryPasswordComponent],
@@ -19,6 +20,7 @@ import { HeaderInterceptor } from './security/interceptor/header-interceptor.ser
     FormsModule,
     BrowserAnimationsModule,
     HttpClientModule,
+    HeaderModule,
     ToastrModule.forRoot({
       newestOnTop: true,
       timeOut: 3000,

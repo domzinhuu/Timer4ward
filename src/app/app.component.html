@@ -1,1 +1,7 @@
-<router-outlet></router-outlet>
+<div class="body">
+  <tf-header [username]="(loggedUser$ | async).name"></tf-header>
+
+  <div class="container-fluid" style="padding-top: 60px;">
+    <router-outlet></router-outlet>
+  </div>
+</div>

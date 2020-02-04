@@ -1,4 +1,5 @@
 import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
+import { AuthenticationService } from 'src/app/services/authentication/authentication.service';
 
 @Component({
   selector: 'tf-header',
@@ -7,8 +8,12 @@ import { Component, OnInit, Input, Output, EventEmitter } from '@angular/core';
 })
 export class HeaderComponent implements OnInit {
   @Input() username: string;
-  @Output() logout = new EventEmitter();
-  constructor() {}
+
+  constructor(private authService: AuthenticationService) {}
 
   ngOnInit() {}
+
+  public logout(): void {
+    this.authService.logout();
+  }
 }

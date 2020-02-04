@@ -17,9 +17,7 @@ export class AuthenticationComponent implements OnInit {
   isForgetPassword = false;
   constructor(private loginService: AuthenticationService, private toast: ToastHelperService, private router: Router) {}
 
-  ngOnInit() {
-
-  }
+  ngOnInit() {}
 
   public login(formData: NgForm): void {
     if (formData.invalid) {
@@ -35,7 +33,7 @@ export class AuthenticationComponent implements OnInit {
       (res: UserModel) => {
         this.isLoading = false;
         this.toast.show(ToastType.SUCCESS, 'Bem vindo ' + res.name, 'Usuário logado');
-        this.router.navigateByUrl('/dashboard/home/info');
+        this.router.navigateByUrl('/dashboard');
       },
       err => {
         this.isLoading = false;
