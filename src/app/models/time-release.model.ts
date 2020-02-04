@@ -5,8 +5,10 @@ export interface TimeReleaseModel {
   _id?: string;
   hour: number;
   minute?: number;
-  user: UserModel | string;
-  costCenter?: CostCenterModel;
+  user?: any;
+  refDate: any;
+  description?: string;
+  costCenter?: any;
   createdAt?: Date;
   updatedAt?: Date;
 }

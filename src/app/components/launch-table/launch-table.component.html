@@ -33,7 +33,7 @@
     <button *ngIf="!isLoading" class="btn btn-primary" (click)="search(true)">
       <i class="fa fa-search"></i> Pesquisar
     </button>
-    <button *ngIf="isLoading" class="btn btn-primary" disabled>
+    <button *ngIf="isLoading" class="btn btn-link btn-sm" disabled>
       <i class="fa fa-spin fa-spinner"></i> Processando...
     </button>
   </div>
@@ -43,7 +43,8 @@
   <table class="table table-striped table-bordered table-hover">
     <thead class="thead-dark">
       <tr class="text-center">
-        <th class="text-left">#</th>
+        <th>Data de referência</th>
+        <th *ngIf="loggedUser.role === 'admin'">Colaborador</th>
         <th>Centro de custo</th>
         <th>Tempo gasto</th>
         <th>Ação</th>
@@ -51,10 +52,12 @@
     </thead>
     <tbody>
       <tr class="text-center" *ngIf="!(releases$ | async)?.length">
-        <td colspan="4">Nenhum registro encontrado.</td>
+        <td *ngIf="loggedUser.role === 'admin'" colspan="5">Nenhum registro encontrado.</td>
+        <td *ngIf="loggedUser.role === 'user'" colspan="4">Nenhum registro encontrado.</td>
       </tr>
       <tr class="text-center" *ngFor="let release of releases$ | async">
-        <td class="text-left">{{ release?.createdAt | date: 'dd/MM/yyyy HH:mm' }}</td>
+        <td>{{ release?.refDate | date: 'dd/MM/yyyy':'+0300' }}</td>
+        <td *ngIf="loggedUser.role === 'admin'">{{ release.user.name }}</td>
         <td>{{ release?.costCenter.name }}</td>
         <td>{{ formatTime(release?.hour, release?.minute) }}</td>
         <td>
@@ -80,7 +83,116 @@
         </li>
       </ul>
     </nav>
+  </div>
+</div>
 
-    <i class="fa fa-spin fa-spinner fa-lg" *ngIf="isLoading"></i>
+<div class="edit-modal">
+  <!-- Button trigger modal -->
+  <button
+    hidden
+    id="openEditModal"
+    type="button"
+    class="btn btn-primary"
+    data-toggle="modal"
+    data-target="#editRelease"
+  >
+    Launch demo modal
+  </button>
+
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="editRelease"
+    tabindex="-1"
+    role="dialog"
+    aria-labelledby="editReleaseTitleModal"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered" role="document">
+      <form #releaseEditForm="ngForm">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h5 class="modal-title" id="editReleaseTitleModal">Modal title</h5>
+            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+              <span aria-hidden="true">&times;</span>
+            </button>
+          </div>
+          <div class="modal-body">
+            <div class="row">
+              <div class="col-sm-12 form-group">
+                <label for="costCenter">Centro de Custo<span class="font-weight-bold text-danger">*</span></label>
+                <select name="costCenter" id="costCenter" [(ngModel)]="releaseRegister.costCenter" class="form-control">
+                  <option [ngValue]="null">Selecione</option>
+                  <option [ngValue]="center._id" *ngFor="let center of costCenterList">{{ center.name }}</option>
+                </select>
+              </div>
+
+              <div class="col-sm-6 form-group ">
+                <label for="time">Tempo Gasto<span class="font-weight-bold text-danger">*</span></label>
+                <input
+                  class="form-control"
+                  [(ngModel)]="releaseRegister.hour"
+                  min="0"
+                  type="number"
+                  name="hour"
+                  id="time"
+                  placeholder="Hora"
+                />
+              </div>
+              <div class="col-sm-6 form-group">
+                <label for="minute">&nbsp;</label>
+                <input
+                  class="form-control"
+                  min="0"
+                  max="59"
+                  [(ngModel)]="releaseRegister.minute"
+                  type="number"
+                  name="minute"
+                  id="minute"
+                  placeholder="Min"
+                />
+              </div>
+
+              <div class="col-sm-12 form-group">
+                <label for="refDate"
+                  >Data de Referência<span class="font-weight-bold text-danger">* importante</span></label
+                >
+                <input
+                  type="date"
+                  name="refDate"
+                  id="refDate"
+                  [(ngModel)]="releaseRegister.refDate"
+                  class="form-control"
+                />
+              </div>
+
+              <div class="col-sm-12 form-group">
+                <label for="description">Descrição das Atividade</label>
+                <textarea
+                  name="description"
+                  id="description"
+                  cols="30"
+                  rows="5"
+                  [(ngModel)]="releaseRegister.description"
+                  class="form-control"
+                  placeholder="Você pode detalhar suas atividades aqui..."
+                ></textarea>
+              </div>
+
+              <div class="col-sm-12 text-right"></div>
+            </div>
+          </div>
+          <div class="modal-footer">
+            <button type="button" id="closeEditModal" class="btn btn-secondary" data-dismiss="modal">Close</button>
+            <button *ngIf="!isLoading" (click)="saveRelease(releaseEditForm)" class="btn btn-primary">
+              <i class="fa fa-send"></i> Enviar
+            </button>
+            <button *ngIf="isLoading" class="btn btn-primary" disabled>
+              <i class="fa fa-spin fa-spinner"></i> Processando...
+            </button>
+          </div>
+        </div>
+      </form>
+    </div>
   </div>
 </div>

@@ -5,6 +5,7 @@ import { TimeReleaseService } from 'src/app/services/time-release/time-release.s
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { ToastType } from 'src/app/utils/helpers';
 import { TimeReleaseModel } from 'src/app/models/time-release.model';
+import { formatDate } from '@angular/common';
 
 @Component({
   selector: 'tf-launch-form',
@@ -26,8 +27,10 @@ export class LaunchFormComponent implements OnInit {
 
   ngOnInit() {
     this.releaseForm = this.fb.group({
-      hour: [0, Validators.required],
-      minute: [0, Validators.required],
+      hour: ['', Validators.required],
+      minute: ['', Validators.required],
+      refDate: [formatDate(new Date(), 'yyyy-MM-dd', 'en'), Validators.required],
+      description: [''],
       costCenter: [null, Validators.required]
     });
   }
@@ -47,7 +50,6 @@ export class LaunchFormComponent implements OnInit {
 
     this.isLoading = true;
     const release: TimeReleaseModel = this.releaseForm.value as TimeReleaseModel;
-    release.user = this.loggedUserId;
 
     this.timeReleaseService.save(release).subscribe(
       res => {
